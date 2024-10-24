@@ -32,6 +32,8 @@ THEY'RE LOOKING PRETTY SIMILAR.  They are obviously all normalized, but what I c
   
 - [ ] record existing detector wavelengths, window sizes, and detectivities, to find what temperatures, emissivities, etc. would be necessary
 
+- [ ] think on the thermal distributon (Is Gaussian a reasonable approximation?  Probably does not matter too much)
+
 - [ ] make sure the overflow runtime warning from running the summation script is not critical
 
 - [ ] optimize spectra summing script (it's radially symmetric, no need to calculate the same values multiple times... or do I?  would there be more outside points?  I need to sleep)
@@ -48,6 +50,12 @@ Additional challenges include
   
 ## Resources
 
-- carbothermal shock paper and SI
+- [Thor Labs Detectors Page](https://www.thorlabs.com/newgrouppage9.cfm?objectgroup_id=11319)
+
+- ["Carbothermal Shock"](https://www.science.org/doi/10.1126/science.aan5412) (Yao et al., 2018) paper and SI
+  
+![alt text](carbothermalshock_T-vs-t.png)
 
 - thermal imaging techniques, microbolometry, etc.
+
+- Wein Displacement Law: `λ_max = 2.898 x 10^-3 / T`

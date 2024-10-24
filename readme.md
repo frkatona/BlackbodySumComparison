@@ -8,7 +8,7 @@ Among the many possible challenges includes the conflation of multiple blackbody
 
 ## What we know
 
-Lab work has shown thus far that
+Our lab work has shown thus far that
 
 - CB + CW (60 W) 808 nm laser irradiation has only achieved a maximum temperature of ~800 K
   
@@ -24,7 +24,7 @@ Lab work has shown thus far that
 
 ![alt text](SpectraSums.png)
 
-THEY'RE LOOKING PRETTY SIMILAR.  Hopefully that will be mitigated with a homogenized thermal distribution.
+THEY'RE LOOKING PRETTY SIMILAR.  They are obviously all normalized, but what I care about is shape similarity anyway. Hopefully that will be mitigated with a homogenized thermal distribution.
 
 ### to-do
 

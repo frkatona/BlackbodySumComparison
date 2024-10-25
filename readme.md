@@ -34,7 +34,7 @@ THEY'RE LOOKING PRETTY SIMILAR.  They are obviously all normalized, but what I c
 
 ![alt text](uniform-vs-summed.png)
 
-These results are promising in some ways.  They do show that the difference between the real blackbody spectra and the summed blackbody spectra approaches 20% at increasing temperatures, but I believe this conflation of blackbodies is likely to be the worst case scenario and 20% is not too bad.  
+I find these results promising.  They do show that the difference between the real blackbody spectra and the summed blackbody spectra approaches 20%, but only when the entire falloff is visible.  This suggests that the blackbody spectra will be distinct enough to be able to fit to the summed spectra and that a well-positioned aperature will only improve the temperature estimates from there.
 
 ### to-do
 

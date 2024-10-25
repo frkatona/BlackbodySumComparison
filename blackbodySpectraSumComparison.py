@@ -26,8 +26,8 @@ blues = cm.Blues(np.linspace(0.2, 1.0, len(temperatures)))
 summedPeakPositions = []
 
 # Generate a Gaussian temperature distribution
-length = 100 # pixels
-sigma = 200
+length = 300 # pixels
+sigma = 50
 x = np.linspace(-length // 2, length // 2, length)
 y = np.linspace(-length // 2, length // 2, length)
 x, y = np.meshgrid(x, y)
@@ -36,7 +36,7 @@ x, y = np.meshgrid(x, y)
 plt.figure(figsize=(8, 8))
 plt.imshow(np.exp(-(x**2 + y**2) / (2 * sigma**2)), cmap='hot', interpolation='nearest')
 plt.colorbar(label='temperature (arb)')
-plt.title(f'{length}x{length} px normal temperature distribution at sigma = {sigma}', fontsize=16)
+plt.title(f'{length}x{length} px normal temperature distribution at sigma = {sigma}', fontsize=12)
 
 #%%
 # Plot each summed blackbody spectrum
@@ -114,3 +114,5 @@ plt.xlim(0, 3200)
 plt.ylim(0, 3200)
 plt.grid(True)
 plt.legend(fontsize=12)
+
+# %%

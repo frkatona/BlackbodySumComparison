@@ -36,7 +36,9 @@ x, y = np.meshgrid(x, y)
 plt.figure(figsize=(8, 8))
 plt.imshow(np.exp(-(x**2 + y**2) / (2 * sigma**2)), cmap='hot', interpolation='nearest')
 plt.colorbar(label='temperature (arb)')
-plt.title(f'{length}x{length} px normal temperature distribution at sigma = {sigma}', fontsize=12)
+plt.xticks(fontsize=16)
+plt.yticks(fontsize=16)
+# plt.title(f'{length}x{length} px normal temperature distribution at sigma = {sigma}', fontsize=12)
 
 #%%
 # Plot each summed blackbody spectrum

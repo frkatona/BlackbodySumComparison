@@ -1,46 +1,42 @@
 # Blackbody Spectra Summing
 
-A few scripts written to begin to gauge the feasibility of building a blackbody thermometer for ultrafast, nanoscale temperature measurements.
+A script to begin to assess (and address) the challenges of building a blackbody thermometer for ultrafast, nanoscale temperature measurements.
 
-## The problem
+## Problem 1: spatial conflation of blackbody temperatures
 
-Among the many possible challenges includes the conflation of multiple blackbody temperatures across space.  This repository contains scripts to (1) crudely plot the temperature distribution of an irradiated sample and (2) sum the blackbody spectra of the individual temperatures to compare with the total blackbody spectrum and gauge distinctiveness given temperature range and thermal distribution.
+Among the many possible challenges (enumerated below) is the conflation of multiple blackbody temperatures across space.  Whereas a single blackbody spectrum can be used to determine the temperature of an object, the sum of a distribution of such blackbody spectra may present as a substantially different temperature depending on the distribution, the measurement, and the fitting method.  This script is a first step in understanding the challenges of this conflation.
 
-## What we know
-
-Work in lab has shown thus far that
-
-- CB + CW (60 W) 808 nm laser irradiation has only achieved a maximum temperature of ~800 K
-  
-- pulsed (50 mJ) 1064 nm laser irradiation has achieved likely > 1000 K based on kinetic calculations, though likely if at all, only for durations on nanosecond timescales
+It works by (1) plotting a temperature map Gaussian falloff based on an input temperature and standard deviation (2) finding and summing the blackbody spectra for each pixel's temperature to compare with the total blackbody spectrum.  Finally (3) it plots the difference in temperature between the two.
 
 ## Running the script
 
-In `blackbodySpectraSumComparison.py`, run cell-by-cell to (1) visualize the distribution with the size and sigma parameters, (2) compare the simulated summed conflated blackbody spectra with 'pure' temperature blackbodies of the same peak position, and (3) plot the difference in temperature between the two.
+In `blackbodySpectraSumComparison.py`, run cell-by-cell to (1) visualize the distribution with the size (pixel length of one side of the square grid) and sigma parameters, (2) compare the simulated summed conflated blackbody spectra with 'pure' temperature blackbodies of the same peak position, and (3) plot the difference.
+
+Note that when sigma >> size, the falloff will be entirely visible, resulting in the widest variety of temperatures and therefore the most conflated blackbody spectra (the least ideal situation).  Conversely, when sigma << size, the distribution will approach uniformity and the conflated spectra will be more similar to the pure blackbody spectra.
 
 ## Current script findings
 
-### **Figure 1:** Temperature distribution for a 2000 K center point and a Gaussian falloff
+### **Figure 1:** Thermal distribtuion with full falloff visibility (sigma = size/6)
 
-![2000K Temperature Distribution Plot](temperature_distribution.png)
+![alt text](Figure1_distribution1.png)
 
-This plot represents the worst case scenario: the falloff is entirely visible.  This means that the temperature of interest (the peak temperature) will produce just one of many blackbody spectra that will be summed to produce the total blackbody spectrum.  The question is, how distinct will the total blackbody spectrum be from the pure blackbody spectra?  Is the broadening enough to make a unique determination impossible?  This is approached in slightly different ways in the following two figures.
+This plot represents the worst case scenario of full falloff visibility where the temperature of interest (the peak temperature) represents just one of many blackbody spectra that will be summed to produce the total blackbody spectrum.  The question is, how distinct will the total blackbody spectrum be from the pure blackbody spectra?  Is the broadening enough to make a unique determination impossible?  The following two figures both seek to compare the conflated blackbody sums with the pure blackbodies.
 
-### **Figure 2:** Various summed blackbody spectra for a sigma = 10 distribution alongside pure blackbodies at *the corresponding temperatures*
+### **Figure 2:** Various summed blackbody spectra for a fully visible Gaussian falloff alongside 'thermally uniform' blackbodies at *the corresponding maximum temperatures*
 
-![sigma = 10 Summed Blackbodies with Raw Blackbodies at Same Temps](SpectraSums.png)
+![alt text](Figure2_SpectraSums-SameTemp.png)
 
 Here, the same temperatures are used to compare the blackbody spectra.  This is a good way to see how the shape of the blackbody spectra changes with temperature.  Another way to compare the blackbody spectra is to use the Wein Displacement Law with on the conflated blackbodies to find corresponding pure blackbody temperatures.
 
-### **Figure 3:** Various summed blackbody spectra for a sigma = 10 distribution alongside pure blackbodies at *the corresponding peak positions*
+### **Figure 3:**  Various summed blackbody spectra for a fully visible Gaussian falloff alongside 'thermally uniform' blackbodies at *the corresponding peak positions*
 
-![sigma = 10 Summed Blackbodies with Raw Blackbodies at Same Temps](SpectraSums2.png)
+![alt text](Figure3_SpectraSums-SamePeak.png)
 
 Indeed, these peak-aligned spectra look similar and deviate from their counterparts by anywhere between 15 K and 500 K.  The following graph shows the how the difference in temperature changes with the peak temperature.
 
 ### **Figure 4:** Difference in temperature for the blackbodies at the same peak position given a sigma = 10 distribution
 
-![alt text](uniform-vs-summed.png)
+![alt text](Figure4_DifferenceLine.png)
 
 I find these results promising.  They do show that the difference between the real blackbody spectra and the summed blackbody spectra can something like 20%, but remember this is when the entire falloff is visible.  This suggests that the blackbody spectra will be distinct enough to be able to fit to the summed spectra and produce temperatures within ~20% of the real value.  And a well-positioned aperature and optical setup that can filter the temperature falloff will only improve the temperature estimates from there.
 
@@ -64,6 +60,14 @@ I find these results promising.  They do show that the difference between the re
 
 - [ ] optimize spectra summing script (it's radially symmetric, no need to calculate the same values multiple times... or do I?  would there be more outside points?  I need to sleep)
 
+## What we know
+
+In the past, we've investigated the temperatures photothermal treatment can achieve.  For example, we know that
+
+- CB + CW (60 W) 808 nm laser irradiation has only achieved a maximum temperature of ~800 K
+  
+- pulsed (50 mJ) 1064 nm laser irradiation has achieved likely > 1000 K based on kinetic calculations, though likely if at all, only for durations on nanosecond timescales
+
 ## Future considerations
 
 Additional challenges include
@@ -80,7 +84,7 @@ Additional challenges include
 
 - ["Carbothermal Shock"](https://www.science.org/doi/10.1126/science.aan5412) (Yao et al., 2018) paper and SI
   
-![alt text](carbothermalshock_T-vs-t.png)
+![alt text](SI1_carbothermalshock_T-vs-t.png)
 
 - thermal imaging techniques, microbolometry, etc.
 

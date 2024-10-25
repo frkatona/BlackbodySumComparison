@@ -1,7 +1,8 @@
+#%%
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.constants as const
-import csv
+from scipy.optimize import curve_fit
 import matplotlib.cm as cm
 
 # Define a function to calculate blackbody spectral radiance using Planck's law
@@ -22,16 +23,27 @@ summed_spectra = []
 reds = cm.Reds(np.linspace(0.2, 1.0, len(temperatures)))
 blues = cm.Blues(np.linspace(0.2, 1.0, len(temperatures)))
 
+summedPeakPositions = []
+
+# Generate a Gaussian temperature distribution
+length = 100 # pixels
+sigma = 200
+x = np.linspace(-length // 2, length // 2, length)
+y = np.linspace(-length // 2, length // 2, length)
+x, y = np.meshgrid(x, y)
+
+# show a sample of the distribution with normalized temperature
+plt.figure(figsize=(8, 8))
+plt.imshow(np.exp(-(x**2 + y**2) / (2 * sigma**2)), cmap='hot', interpolation='nearest')
+plt.colorbar(label='temperature (arb)')
+plt.title(f'{length}x{length} px normal temperature distribution at sigma = {sigma}', fontsize=16)
+
+#%%
 # Plot each summed blackbody spectrum
 plt.figure(figsize=(16, 10))
 
 for idx, temp in enumerate(temperatures):
-    # Generate a Gaussian temperature distribution centered at `temp`
-    size = 64
-    sigma = 10
-    x = np.linspace(-size // 2, size // 2, size)
-    y = np.linspace(-size // 2, size // 2, size)
-    x, y = np.meshgrid(x, y)
+
     temperature_distribution = temp * np.exp(-(x**2 + y**2) / (2 * sigma**2))
 
     # Sum the blackbody spectra for the distribution
@@ -41,13 +53,20 @@ for idx, temp in enumerate(temperatures):
             if pixel_temp > 0:
                 summed_spectrum += planck_law(wavelengths, pixel_temp)
 
-    summed_spectrum /= np.max(summed_spectrum)  # Normalize to peak value
+    # store peak positions for wein's displacement law
+    summedPeakPositions.append(wavelengths[np.argmax(summed_spectrum)])
 
-    summed_spectra.append(summed_spectrum)
+    # Normalize
+    summed_spectrum /= np.max(summed_spectrum)  
+
     plt.plot(wavelengths * 1e9, summed_spectrum, color=reds[idx], label=f'Summed T = {temp} K')
 
+# use the peak positions and the wein displacement law to make an array of temperatures
+b = 2.898e-3 # Wien's displacement constant in m*K
+weinTemps = [b // peak for peak in summedPeakPositions]
+
 # Plot individual blackbody spectra for each temperature
-for idx, temp in enumerate(temperatures):
+for idx, temp in enumerate(weinTemps):
     blackbody_spectrum = planck_law(wavelengths, temp)
     blackbody_spectrum /= np.max(blackbody_spectrum)  # Normalize to peak value
     plt.plot(wavelengths * 1e9, blackbody_spectrum, color=blues[idx], linestyle='--', label=f'Blackbody T = {temp} K')
@@ -68,4 +87,30 @@ ax2.tick_params(axis='x', labelsize=16)
 
 plt.grid(True)
 plt.legend(fontsize=12)
-plt.show()
+
+#%%
+# make a graph to compare the original temperatures to the wein temperatures
+
+# Define a linear function for fitting
+def linear_fit(x, a, b):
+    return a * x + b
+
+# Fit the data
+params, _ = curve_fit(linear_fit, temperatures, weinTemps)
+
+# Generate fit line data
+fit_line = linear_fit(np.array(temperatures), *params)
+
+plt.figure(figsize=(16, 10))
+plt.scatter(temperatures, weinTemps, color='red', label='Data')
+plt.plot(temperatures, fit_line, color='blue', linestyle='-', label=f'Fit: y = {params[0]:.2f}x + {params[1]:.2f}')
+plt.plot(temperatures, temperatures, color='green', linestyle='--', label='y = x')
+plt.xlabel('Gaussian Temperature (K)', fontsize=20)
+plt.ylabel('Matching WDL Temperature (K)', fontsize=20)
+plt.xticks(fontsize=16)
+plt.yticks(fontsize=16)
+plt.title('uniform temperatures with matching peak positions to summed blackbody temperatures', fontsize=20)
+plt.xlim(0, 3200)
+plt.ylim(0, 3200)
+plt.grid(True)
+plt.legend(fontsize=12)

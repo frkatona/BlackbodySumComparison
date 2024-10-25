@@ -5,29 +5,17 @@ import scipy.constants as const
 from scipy.optimize import curve_fit
 import matplotlib.cm as cm
 
-# Define a function to calculate blackbody spectral radiance using Planck's law
-def planck_law(wavelength, temperature):
-    # Wavelength in meters, temperature in Kelvin
+def planck_law(wavelength, temperature): # untis = m, K
     return (2 * const.h * const.c**2) / (wavelength**5) * (1 / (np.exp((const.h * const.c) / (wavelength * const.k * temperature)) - 1))
 
-# Wavelength range (in meters)
 wavelengths = np.linspace(100e-9, 10000e-9, 1000)  # 300 nm to 2500 nm
-
-# Temperatures to consider (in K)
 temperatures = [273, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400, 2600, 2800, 3000]
-
-# Prepare to store summed spectra
 summed_spectra = []
-
-# Colors for plotting
-reds = cm.Reds(np.linspace(0.2, 1.0, len(temperatures)))
-blues = cm.Blues(np.linspace(0.2, 1.0, len(temperatures)))
-
 summedPeakPositions = []
 
-# Generate a Gaussian temperature distribution
-length = 300 # pixels
-sigma = 50
+## generate a Gaussian distribution to approximate thermals
+length = 300 # square side-length in pixels
+sigma = 300 # std deviation of the Gaussian in pixels
 x = np.linspace(-length // 2, length // 2, length)
 y = np.linspace(-length // 2, length // 2, length)
 x, y = np.meshgrid(x, y)
@@ -41,7 +29,12 @@ plt.yticks(fontsize=16)
 # plt.title(f'{length}x{length} px normal temperature distribution at sigma = {sigma}', fontsize=12)
 
 #%%
-# Plot each summed blackbody spectrum
+# Plot uniform and conflated blackbodies
+
+# color formatting
+reds = cm.Reds(np.linspace(0.2, 1.0, len(temperatures)))
+blues = cm.Blues(np.linspace(0.2, 1.0, len(temperatures)))
+
 plt.figure(figsize=(16, 10))
 
 for idx, temp in enumerate(temperatures):

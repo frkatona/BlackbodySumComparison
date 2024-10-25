@@ -22,13 +22,13 @@ Note that when sigma >> size, the falloff will be entirely visible, resulting in
 
 This plot represents the worst case scenario of full falloff visibility where the temperature of interest (the peak temperature) represents just one of many blackbody spectra that will be summed to produce the total blackbody spectrum.  The question is, how distinct will the total blackbody spectrum be from the pure blackbody spectra?  Is the broadening enough to make a unique determination impossible?  The following two figures both seek to compare the conflated blackbody sums with the pure blackbodies.
 
-### **Figure 2:** Various summed blackbody spectra for a fully visible Gaussian falloff alongside 'thermally uniform' blackbodies at *the corresponding maximum temperatures*
+### **Figure 2:** Various summed blackbody spectra for a fully visible Gaussian falloff alongside 'thermally uniform' blackbodies at the corresponding *maximum temperatures*
 
 ![alt text](Figure2_SpectraSums-SameTemp.png)
 
 Here, the same temperatures are used to compare the blackbody spectra.  This is a good way to see how the shape of the blackbody spectra changes with temperature.  Another way to compare the blackbody spectra is to use the Wein Displacement Law with on the conflated blackbodies to find corresponding pure blackbody temperatures.
 
-### **Figure 3:**  Various summed blackbody spectra for a fully visible Gaussian falloff alongside 'thermally uniform' blackbodies at *the corresponding peak positions*
+### **Figure 3:**  Various summed blackbody spectra for a fully visible Gaussian falloff alongside 'thermally uniform' blackbodies at the corresponding *peak positions*
 
 ![alt text](Figure3_SpectraSums-SamePeak.png)
 
@@ -40,21 +40,32 @@ Indeed, these peak-aligned spectra look similar and deviate from their counterpa
 
 I find these results promising.  They do show that the difference between the real blackbody spectra and the summed blackbody spectra can something like 20%, but remember this is when the entire falloff is visible.  This suggests that the blackbody spectra will be distinct enough to be able to fit to the summed spectra and produce temperatures within ~20% of the real value.  And a well-positioned aperature and optical setup that can filter the temperature falloff will only improve the temperature estimates from there.
 
+Indeed, for an image where sigma is even only equal to length, the difference between the spectra closes from a slope of 0.82 to 0.92:
+
+### **Figure 5:** Distribution for sigma = size
+
+![alt text](Figure5_distribution2.png)
+
+### **Figure 6:** Blackbodies for sigma = size
+![alt text](Figure6_SpectraSums2.png)
+
+### **Figure 7:** Peak temperature difference for sigma = size
+
+![alt text](Figure7_DifferenceLine2.png)
+
 ### to-do
 
-- [x] instead of using pure blackbody spectra at *the same* temperatures to compare against, use the Wein Displacement Law to find temperatures that produce the same peak
+- [x] instead of using pure blackbody spectra at the *same temperatures* to compare against, use the Wein Displacement Law to find temperatures that produce the same peak
 
 - [x] plot how the blackbody spectra vs summed spectra distinctiveness changes with temperature range
 
-- [ ] plot the influence of the distribution (more than just distribution/sigma though...like, it can be a wide distribution as long as I'm only looking at the center, right?)
+- [x] demonstrate the influence of narrowing the aperature by widening the distribution beyond the image bounds
 
 - [ ] simulate binning at different wavelength windows to inform detector design/purchasing 
 
-- [ ] simulate conflated time windows
+- [ ] simulate conflated time windows?  Would the cooling even follow a roughly conductive/convective model for bulk materials?
 
 - [ ] record existing detector wavelengths, window sizes, and detectivities, to find what temperatures, emissivities, etc. would be necessary
-
-- [ ] think on the thermal distributon (Is Gaussian a reasonable approximation?  Probably does not matter too much)
 
 - [ ] make sure the overflow runtime warning from running the summation script is not critical
 

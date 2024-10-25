@@ -8,11 +8,15 @@ Among the many possible challenges includes the conflation of multiple blackbody
 
 ## What we know
 
-Our lab work has shown thus far that
+Work in lab has shown thus far that
 
 - CB + CW (60 W) 808 nm laser irradiation has only achieved a maximum temperature of ~800 K
   
 - pulsed (50 mJ) 1064 nm laser irradiation has achieved likely > 1000 K based on kinetic calculations, though likely if at all, only for durations on nanosecond timescales
+
+## Running the script
+
+In `blackbodySpectraSumComparison.py`, run cell-by-cell to (1) visualize the distribution with the size and sigma parameters, (2) compare the simulated summed conflated blackbody spectra with 'pure' temperature blackbodies of the same peak position, and (3) plot the difference in temperature between the two.
 
 ## Current script findings
 
@@ -20,21 +24,25 @@ Our lab work has shown thus far that
 
 ![2000K Temperature Distribution Plot](temperature_distribution.png)
 
+This plot represents the worst case scenario: the falloff is entirely visible.  This means that the temperature of interest (the peak temperature) will produce just one of many blackbody spectra that will be summed to produce the total blackbody spectrum.  The question is, how distinct will the total blackbody spectrum be from the pure blackbody spectra?  Is the broadening enough to make a unique determination impossible?  This is approached in slightly different ways in the following two figures.
+
 ### **Figure 2:** Various summed blackbody spectra for a sigma = 10 distribution alongside pure blackbodies at *the corresponding temperatures*
 
 ![sigma = 10 Summed Blackbodies with Raw Blackbodies at Same Temps](SpectraSums.png)
+
+Here, the same temperatures are used to compare the blackbody spectra.  This is a good way to see how the shape of the blackbody spectra changes with temperature.  Another way to compare the blackbody spectra is to use the Wein Displacement Law with on the conflated blackbodies to find corresponding pure blackbody temperatures.
 
 ### **Figure 3:** Various summed blackbody spectra for a sigma = 10 distribution alongside pure blackbodies at *the corresponding peak positions*
 
 ![sigma = 10 Summed Blackbodies with Raw Blackbodies at Same Temps](SpectraSums2.png)
 
-THEY'RE LOOKING PRETTY SIMILAR.  They are obviously all normalized, but what I care about is shape similarity anyway. Hopefully that will be mitigated with a homogenized thermal distribution.
+Indeed, these peak-aligned spectra look similar and deviate from their counterparts by anywhere between 15 K and 500 K.  The following graph shows the how the difference in temperature changes with the peak temperature.
 
 ### **Figure 4:** Difference in temperature for the blackbodies at the same peak position given a sigma = 10 distribution
 
 ![alt text](uniform-vs-summed.png)
 
-I find these results promising.  They do show that the difference between the real blackbody spectra and the summed blackbody spectra approaches 20%, but only when the entire falloff is visible.  This suggests that the blackbody spectra will be distinct enough to be able to fit to the summed spectra and that a well-positioned aperature will only improve the temperature estimates from there.
+I find these results promising.  They do show that the difference between the real blackbody spectra and the summed blackbody spectra can something like 20%, but remember this is when the entire falloff is visible.  This suggests that the blackbody spectra will be distinct enough to be able to fit to the summed spectra and produce temperatures within ~20% of the real value.  And a well-positioned aperature and optical setup that can filter the temperature falloff will only improve the temperature estimates from there.
 
 ### to-do
 
@@ -43,6 +51,10 @@ I find these results promising.  They do show that the difference between the re
 - [x] plot how the blackbody spectra vs summed spectra distinctiveness changes with temperature range
 
 - [ ] plot the influence of the distribution (more than just distribution/sigma though...like, it can be a wide distribution as long as I'm only looking at the center, right?)
+
+- [ ] simulate binning at different wavelength windows to inform detector design/purchasing 
+
+- [ ] simulate conflated time windows
 
 - [ ] record existing detector wavelengths, window sizes, and detectivities, to find what temperatures, emissivities, etc. would be necessary
 

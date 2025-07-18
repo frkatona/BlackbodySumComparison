@@ -4,9 +4,11 @@ A script to begin to assess (and address) the challenges of building a blackbody
 
 ## Problem 1: spatial conflation of blackbody temperatures
 
-Among the many possible challenges (enumerated below) is the conflation of multiple blackbody temperatures across space.  Whereas a single blackbody spectrum can be used to determine the temperature of an object, the sum of a distribution of such blackbody spectra may present as a substantially different temperature depending on the distribution, the measurement, and the fitting method.  This script is a first step in understanding the challenges of this conflation.
+![alt text](Figure0_problem.png)
 
-It works by (1) plotting a temperature map Gaussian falloff based on an input temperature and standard deviation (2) finding and summing the blackbody spectra for each pixel's temperature to compare with the total blackbody spectrum.  Finally (3) it plots the difference in temperature between the two.
+Among many possible challenges (list below) is the conflation of multiple blackbody temperatures across space.  Whereas a single blackbody spectrum can be used to determine the temperature of an object, the sum of a distribution of such blackbody spectra may present as a substantially different temperature depending on the distribution, the measurement, and the fitting method.  This project is a first step in assessing the extent of this meddlesome effect.
+
+The script works by (1) plotting a temperature map Gaussian falloff based on an input temperature and standard deviation (2) finding and summing the blackbody spectra for each pixel's temperature to compare with the total blackbody spectrum.  Finally (3) it plots the difference in temperature between the two.
 
 ## Running the script
 
@@ -20,7 +22,7 @@ Note that when sigma >> size, the falloff will be entirely visible, resulting in
 
 ![alt text](Figure1_distribution1.png)
 
-This plot represents the worst case scenario of full falloff visibility where the temperature of interest (the peak temperature) represents just one of many blackbody spectra that will be summed to produce the total blackbody spectrum.  The question is, how distinct will the total blackbody spectrum be from the pure blackbody spectra?  Is the broadening enough to make a unique determination impossible?  The following two figures both seek to compare the conflated blackbody sums with the pure blackbodies.
+This plot represents the worst case scenario of full falloff visibility where the region of interest (the region with maximum temperature) contributes just one of many blackbody spectra that will be summed to produce the total blackbody spectrum.  The question is, how distinct will the total blackbody spectrum be from the pure blackbody spectra?  Is the broadening enough to make a unique determination impossible?  The following two figures both seek to compare the conflated blackbody sums with the pure blackbodies.
 
 ### **Figure 2:** Various summed blackbody spectra for a fully visible Gaussian falloff alongside 'thermally uniform' blackbodies at the corresponding *maximum temperatures*
 
@@ -63,7 +65,7 @@ Indeed, for an image where sigma is even only equal to length, the difference be
 
 - [ ] simulate binning at different wavelength windows to inform detector design/purchasing 
 
-- [ ] simulate conflated time windows?  Would the cooling even follow a roughly conductive/convective model for bulk materials?
+- [ ] consider simulate conflated time windows.  Would the cooling even follow a roughly conductive/convective model for bulk materials?  Does the depth meaningfully contribute in cooling time, conductive space, or even an additional dimension of blackbody generation?
 
 - [ ] record existing detector wavelengths, window sizes, and detectivities, to find what temperatures, emissivities, etc. would be necessary
 
@@ -71,7 +73,7 @@ Indeed, for an image where sigma is even only equal to length, the difference be
 
 - [ ] optimize spectra summing script (it's radially symmetric, no need to calculate the same values multiple times... or do I?  would there be more outside points?  I need to sleep)
 
-## What we know
+## Relevant Lab Findings
 
 In the past, we've investigated the temperatures photothermal treatment can achieve.  For example, we know that
 
@@ -85,7 +87,7 @@ Additional challenges include
 
 - **Conflation across time** - since substantial cooling can occur for certain systems (e.g., pulsed lasers, MNPs, liquid solvent), a similar 'conflated blackbodies across a range of temperatures' problem will arise for increasing windows of time.  Nano-scale control over the measurement's time-resolution will likely need to be accessed through optics, the detector, or digitally
   
-- **"exposure-triangle" problems** - getting strong enough signal with enough points to ensure high SNR and at spacing that optimizes fit accuracy (ideally enclosing the peak), especially considering the time constraint (see: detectivity)
+- **"exposure-triangle" problems** - getting strong enough signal with enough points to ensure high SNR and at spacing that optimizes fit accuracy (ideally enclosing the peak), especially considering the time constraint and possibly aperature size (see: detectivity)
   
 - **Designing optics** - sensing optics need to focus to a small area, well-aligned with beam such that the thermal distribution is as homogenous as possible.  Moreover, beyond being able to withstand potentially the high powers of beam exposure needed to produce these temperatures, the optics may need to interface with a bulky air-free chamber
   

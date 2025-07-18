@@ -1,4 +1,3 @@
-#%%
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.constants as const
@@ -28,7 +27,6 @@ plt.xticks(fontsize=16)
 plt.yticks(fontsize=16)
 # plt.title(f'{length}x{length} px normal temperature distribution at sigma = {sigma}', fontsize=12)
 
-#%%
 # Plot uniform and conflated blackbodies
 
 # color formatting
@@ -83,7 +81,6 @@ ax2.tick_params(axis='x', labelsize=16)
 plt.grid(True)
 plt.legend(fontsize=12)
 
-#%%
 # make a graph to compare the original temperatures to the wein temperatures
 
 # Define a linear function for fitting
@@ -110,4 +107,5 @@ plt.ylim(0, 3200)
 plt.grid(True)
 plt.legend(fontsize=12)
 
-# %%
+
+plt.show()
